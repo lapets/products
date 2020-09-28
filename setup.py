@@ -7,7 +7,7 @@ setup(
     name="products",
     version="0.1.0",
     packages=["products",],
-    install_requires=[],
+    install_requires=["parts",],
     license="MIT",
     url="https://github.com/lapets/products",
     author="Andrei Lapets",
