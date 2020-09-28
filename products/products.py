@@ -96,4 +96,4 @@ def products(*args, number=None):
     return [generator(prefix) for prefix in prefixes]
 
 if __name__ == "__main__":
-    doctest.testmod()
+    doctest.testmod() # pragma: no cover
