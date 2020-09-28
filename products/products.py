@@ -72,31 +72,28 @@ def products(*args, number=None):
     # of iterables (the subsets).
     if number is None or number == 1:
         return [itertools.product(*args)]
-        
+
     # Determine the product of which prefix of arguments to break up
     # based on the target number of disjoint subsets.
     number_ = 1
+    index = len(args)
     for (i, a) in enumerate(args):
         number_ = number_ * len(a)
         if number_ >= number:
-            i = min(len(args), i + 1)
+            index = min(len(args), i + 1)
             break
 
     # Create an iterable for each prefix.
-    prefixes = list(parts(list(itertools.product(*args[0:i])), number))
+    prefixes = list(parts(list(itertools.product(*args[0:index])), number))
 
     # For each prefix, create an iterable for that prefix by concatenating
     # elements of the prefix to elements of suffix product.
-    
-    def mk(prefix):
+    def generator(prefix):
         for p in prefix:
-            for s in itertools.product(*args[i:]):
+            for s in itertools.product(*args[index:]):
                 yield p + s
 
-    return [
-        mk(prefix)
-        for prefix in prefixes
-    ]
+    return [generator(prefix) for prefix in prefixes]
 
 if __name__ == "__main__":
     doctest.testmod()
