@@ -1,2 +1,2 @@
-"""Give users direct access to the function."""
+"""Gives users direct access to the function."""
 from products.products import products

@@ -1,27 +1,31 @@
-"""Pre-partitioned Cartesian product iterables.
-
+"""
 Simple function for building ensembles of iterables
 that are disjoint partitions of an overall Cartesian product.
 """
-
+from __future__ import annotations
+from typing import Optional
 import doctest
 import itertools
 from parts import parts
 
-def products(*args, number=None):
+def products(*args, number: Optional[int]=None):
     """
-    Build the specified number disjoint subsets (as iterables)
-    of the Cartesian product. The disjoint subsets are all
-    entries in the overall result, which is a list.
+    Build the specified number of disjoint subsets (as iterables) of the
+    Cartesian product. The disjoint subsets are all entries in the overall
+    result, which is a list.
 
-    >>> p = itertools.product([1,2], {'a', 'b'}, (True, False))
-    >>> p_ = products([1,2], {'a', 'b'}, (True, False))
+    >>> p = itertools.product([1, 2], {'a', 'b'}, (True, False))
+    >>> p_ = products([1, 2], {'a', 'b'}, (True, False))
     >>> list(p) == list(list(p_)[0])
     True
     >>> list(list(products())[0])
     [()]
     >>> list(list(products([1,2]))[0])
     [(1,), (2,)]
+
+    It is possible to designate the number of disjoint subsets of the
+    Cartesian product that should be generated.
+
     >>> (x, y, z) = ([1,2], ['a','b'], [True, False])
     >>> [list(s) for s in products(x, y, number=2)]
     [[(1, 'a'), (1, 'b')], [(2, 'a'), (2, 'b')]]
@@ -35,12 +39,16 @@ def products(*args, number=None):
     True
     >>> set([len(ss[i] & ss[j]) for i in range(5) for j in range(5) if i != j])
     {0}
-    >>> len(products(*[[1,2,3]]*1000, number=5))
+    >>> len(products(*[[1, 2, 3]]*1000, number=5))
     5
-    >>> ls = [len(products(*[[1,2]]*1000, number=n)) for n in range(1, 100)]
+    >>> ls = [len(products(*[[1, 2]]*1000, number=n)) for n in range(1, 100)]
     >>> ls == list(range(1, 100))
     True
-    >>> products([1,2], number='abc')
+
+    Any attempt to apply this function to arguments of an unsupported type
+    raises an exception.
+
+    >>> products([1, 2], number='abc')
     Traceback (most recent call last):
       ...
     TypeError: number of disjoint subsets must be an integer
@@ -48,11 +56,11 @@ def products(*args, number=None):
     Traceback (most recent call last):
       ...
     TypeError: arguments must be of type list, set, frozenset, or tuple
-    >>> products([1,2], number=0)
+    >>> products([1, 2], number=0)
     Traceback (most recent call last):
       ...
     ValueError: number of disjoint subsets must be a positive integer
-    >>> products([1,2], number=0)
+    >>> products([1, 2], number=0)
     Traceback (most recent call last):
       ...
     ValueError: number of disjoint subsets must be a positive integer
