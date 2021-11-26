@@ -26,6 +26,9 @@ def products(*args, number: Optional[int] = None):
     (2, 'a', True)
     (2, 'b', False)
     (2, 'b', True)
+
+    Two additional basic examples are presented below.
+
     >>> (x, y, z) = ([1, 2], ['a', 'b'], [True, False])
     >>> [list(s) for s in products(x, y, number=2)]
     [[(1, 'a'), (1, 'b')], [(2, 'a'), (2, 'b')]]

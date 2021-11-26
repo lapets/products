@@ -4,11 +4,15 @@ products
 
 Simple function for building ensembles of iterables that are disjoint partitions of an overall Cartesian product.
 
-|pypi| |travis| |coveralls|
+|pypi| |readthedocs| |travis| |coveralls|
 
 .. |pypi| image:: https://badge.fury.io/py/products.svg
    :target: https://badge.fury.io/py/products
    :alt: PyPI version and link.
+
+.. |readthedocs| image:: https://readthedocs.org/projects/products/badge/?version=latest
+   :target: https://products.readthedocs.io/en/latest/?badge=latest
+   :alt: Read the Docs documentation status.
 
 .. |travis| image:: https://app.travis-ci.com/lapets/products.svg?branch=master
    :target: https://app.travis-ci.com/lapets/products
