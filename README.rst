@@ -18,7 +18,7 @@ Simple function for building ensembles of iterables that are disjoint partitions
 
 Purpose
 -------
-Once the ``iterables.product`` `function <https://docs.python.org/3/library/itertools.html#itertools.product>`_ has been used to build an iterable for a Cartesian product, it is already too late to partition that iterable into multiple iterables where each one represent a subset of the product set. Iterables representing disjoint subsets can, for example, make it easier to employ parallelization when processing the product set. The ``products`` function in this package attempts to construct the specified number of disjoint subsets of a product set (in the manner of the `parts <https://pypi.org/project/parts/>`_ library), exploiting as much information as possible about the constituent factor sets of the overall product set in order to do so.
+Once the ``iterables.product`` `function <https://docs.python.org/3/library/itertools.html#itertools.product>`_ has been used to build an iterable for a Cartesian product, it is already too late to partition that iterable into multiple iterables where each one represents a subset of the product set. Iterables representing disjoint subsets can, for example, make it easier to employ parallelization when processing the product set. The ``products`` function in this package constructs a list of independent iterators for a specified number of disjoint subsets of a product set (in the manner of the `parts <https://pypi.org/project/parts/>`_ library), exploiting as much information as possible about the constituent factor sets of the overall product set in order to do so.
 
 Package Installation and Usage
 ------------------------------
@@ -30,6 +30,34 @@ The library can be imported in the usual ways::
 
     import products
     from products import products
+
+This library provides an alternative to the built-in Cartesian product function found in `itertools <https://docs.python.org/3/library/itertools.html>`_, making it possible to iterate over multiple disjoint subsets of a Cartesian product (even in parallel). Consider the Cartesian product below::
+
+    >>> from itertools import product
+    >>> p = product([1, 2], {'a', 'b'}, (False, True))
+    >>> for t in p:
+    ...     print(t)
+    (1, 'a', False)
+    (1, 'a', True)
+    (1, 'b', False)
+    (1, 'b', True)
+    (2, 'a', False)
+    (2, 'a', True)
+    (2, 'b', False)
+    (2, 'b', True)
+
+This library makes it possible to create a number of iterators such that each iterator represents a disjoint subset of the overall Cartesian product. The example below does so for the above Cartesian product, creating four disjoint subsets::
+
+    >>> from products import products
+    >>> ss = products([1, 2], {'a', 'b'}, (True, False), number=4)
+    >>> for s in ss:
+    ...     print(list(s))
+    [(1, 'a', True), (1, 'a', False)]
+    [(1, 'b', True), (1, 'b', False)]
+    [(2, 'a', True), (2, 'a', False)]
+    [(2, 'b', True), (2, 'b', False)]
+
+The iterable corresponding to each subset is independent from the others, making it possible to employ techniques such as multiprocessing when operating on the elements of the overall Cartesian product.
 
 Testing and Conventions
 -----------------------
