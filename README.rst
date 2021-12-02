@@ -4,7 +4,7 @@ products
 
 Simple function for building ensembles of iterables that are disjoint partitions of an overall Cartesian product.
 
-|pypi| |readthedocs| |travis| |coveralls|
+|pypi| |readthedocs| |actions| |coveralls|
 
 .. |pypi| image:: https://badge.fury.io/py/products.svg
    :target: https://badge.fury.io/py/products
@@ -14,9 +14,9 @@ Simple function for building ensembles of iterables that are disjoint partitions
    :target: https://products.readthedocs.io/en/latest/?badge=latest
    :alt: Read the Docs documentation status.
 
-.. |travis| image:: https://app.travis-ci.com/lapets/products.svg?branch=master
-   :target: https://app.travis-ci.com/lapets/products
-   :alt: Travis CI build status.
+.. |actions| image:: https://github.com/lapets/products/workflows/lint-test-cover-docs/badge.svg
+   :target: https://github.com/lapets/products/actions/workflows/lint-test-cover-docs.yml
+   :alt: GitHub Actions status.
 
 .. |coveralls| image:: https://coveralls.io/repos/github/lapets/products/badge.svg?branch=master
    :target: https://coveralls.io/github/lapets/products?branch=master
