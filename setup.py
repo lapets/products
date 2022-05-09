@@ -11,7 +11,7 @@ setup(
     name=name,
     version=version,
     packages=[name,],
-    install_requires=["parts~=1",],
+    install_requires=["parts~=1.3",],
     license="MIT",
     url="https://github.com/lapets/products",
     author="Andrei Lapets",
