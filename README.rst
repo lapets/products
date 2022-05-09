@@ -18,8 +18,8 @@ Simple function for building ensembles of iterables that are disjoint partitions
    :target: https://github.com/lapets/products/actions/workflows/lint-test-cover-docs.yml
    :alt: GitHub Actions status.
 
-.. |coveralls| image:: https://coveralls.io/repos/github/lapets/products/badge.svg?branch=master
-   :target: https://coveralls.io/github/lapets/products?branch=master
+.. |coveralls| image:: https://coveralls.io/repos/github/lapets/products/badge.svg?branch=main
+   :target: https://coveralls.io/github/lapets/products?branch=main
    :alt: Coveralls test coverage summary.
 
 Purpose
