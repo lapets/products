@@ -5,13 +5,13 @@ with open("README.rst", "r") as fh:
 
 # The lines below can be parsed by `docs/conf.py`.
 name = "products"
-version = "0.3.2"
+version = "0.4.0"
 
 setup(
     name=name,
     version=version,
     packages=[name,],
-    install_requires=["parts~=1.2",],
+    install_requires=["parts~=1",],
     license="MIT",
     url="https://github.com/lapets/products",
     author="Andrei Lapets",
@@ -21,6 +21,4 @@ setup(
                 "product.",
     long_description=long_description,
     long_description_content_type="text/x-rst",
-    test_suite="nose.collector",
-    tests_require=["nose"],
 )
