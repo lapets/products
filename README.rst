@@ -28,7 +28,7 @@ Purpose
 .. |itertools_product| replace:: ``itertools.product``
 .. _itertools_product: https://docs.python.org/3/library/itertools.html#itertools.product
 
-Once the |itertools_product|_ has been used to build an iterable for a `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`__, it is already too late to partition that iterable into multiple iterables where each one represents a subset of the product set. Iterables representing disjoint subsets can, for example, make it easier to employ parallelization when processing the product set.
+Once the |itertools_product|_ has been used to build an iterable representing a `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`__, it is already too late to partition that iterable into multiple iterables where each one represents a subset of the product set. Iterables representing disjoint subsets can, for example, make it easier to employ parallelization when processing the product set.
 
 .. |products| replace:: ``products``
 .. _products: https://products.readthedocs.io/en/latest/_source/products.html#products.products.products

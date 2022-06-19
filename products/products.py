@@ -3,23 +3,26 @@ Simple function for building ensembles of iterators that
 represent disjoint partitions of an overall Cartesian product.
 """
 from __future__ import annotations
-from typing import Union, Optional, Sequence
+from typing import Optional
 import doctest
-from collections.abc import Iterable
+from collections.abc import Iterable, Collection, Sequence
 import itertools
 from parts import parts
 
 def products(
-        *args: Sequence[Union[list, set, frozenset, tuple]],
+        *collections: Iterable[Collection],
         number: Optional[int] = None
     ) -> Sequence[Iterable]:
     """
-    Return a :obj:`~typing.Sequence` of the specified number of disjoint subsets
-    (with each subset represented as an :obj:`~collections.abc.Iterable` object)
-    of the Cartesian product (such that the union of the disjoint subsets is
-    equal to the overall Cartesian product).
+    Accept an :obj:`~collections.abc.Iterable` of :obj:`~collections.abc.Collection`
+    instances and return a :obj:`~collections.abc.Sequence` of the specified number
+    of disjoint subsets of the
+    `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`_ of the
+    supplied :obj:`~collections.abc.Collection` instances. Each subset is
+    represented as an :obj:`~collections.abc.Iterable` and the union of the disjoint
+    subsets is equal to the overall Cartesian product.
 
-    >>> ss = products([1, 2], {'a', 'b'}, (False, True), number=3)
+    >>> ss = products(range(1, 3), {'a', 'b'}, (False, True), number=3)
     >>> for s in sorted([sorted(list(s)) for s in ss]):
     ...     for t in s:
     ...         print(t)
@@ -88,7 +91,7 @@ def products(
     >>> products((i for i in range(3)), number=2)
     Traceback (most recent call last):
       ...
-    TypeError: arguments must be of type list, set, frozenset, or tuple
+    TypeError: arguments must be collections
     >>> products([1, 2], number=0)
     Traceback (most recent call last):
       ...
@@ -98,16 +101,17 @@ def products(
       ...
     ValueError: number of disjoint subsets must be a positive integer
     """
-    if not all(isinstance(arg, (list, set, frozenset, tuple)) for arg in args):
-        raise TypeError(
-            'arguments must be of type list, set, frozenset, or tuple'
-        )
+    factors = list(collections) # Ensure factor sets are reusable and their quantity is known.
 
-    if number is not None and not isinstance(number, int):
-        raise TypeError('number of disjoint subsets must be an integer')
+    if not all(isinstance(factor, Collection) for factor in factors):
+        raise TypeError('arguments must be collections')
 
-    if number is not None and number < 1:
-        raise ValueError('number of disjoint subsets must be a positive integer')
+    if number is not None:
+        if not isinstance(number, int):
+            raise TypeError('number of disjoint subsets must be an integer')
+
+        if number < 1:
+            raise ValueError('number of disjoint subsets must be a positive integer')
 
     # If no target number of disjoint subsets has been supplied, simply
     # return a single product. Note that this function is not equivalent to
@@ -115,27 +119,27 @@ def products(
     # of iterables (the subsets). In this case, there is only one element
     # in that sequence.
     if number is None or number == 1:
-        return [itertools.product(*args)]
+        return [itertools.product(*factors)]
 
     # Determine the product of which prefix of arguments to break up
     # based on the target number of disjoint subsets.
     number_ = 1
-    index = len(args)
-    for (i, a) in enumerate(args):
+    index = len(factors)
+    for (i, a) in enumerate(factors):
         number_ = number_ * len(a)
         if number_ >= number:
-            index = min(len(args), i + 1)
+            index = min(len(factors), i + 1)
             break
 
     # Create an iterable for each prefix.
-    prefixes = list(parts(list(itertools.product(*args[0:index])), number))
+    prefixes = list(parts(list(itertools.product(*factors[0: index])), number))
 
     # For each prefix, create an iterable for that prefix by concatenating
     # elements of the prefix to elements of suffix product.
     def generator(prefix):
         for p in prefix:
-            for s in itertools.product(*args[index:]):
-                yield p + s
+            for s in itertools.product(*factors[index:]):
+                yield p + s # Concatenation of tuples.
 
     return [generator(prefix) for prefix in prefixes]
 
