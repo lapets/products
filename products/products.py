@@ -3,16 +3,21 @@ Simple function for building ensembles of iterators that
 represent disjoint partitions of an overall Cartesian product.
 """
 from __future__ import annotations
-from typing import Optional
+from typing import Union, Optional, Sequence
 import doctest
+from collections.abc import Iterable
 import itertools
 from parts import parts
 
-def products(*args, number: Optional[int] = None):
+def products(
+        *args: Sequence[Union[list, set, frozenset, tuple]],
+        number: Optional[int] = None
+    ) -> Sequence[Iterable]:
     """
-    Return a list of the specified number of disjoint subsets (as iterators)
+    Return a :obj:`~typing.Sequence` of the specified number of disjoint subsets
+    (with each subset represented as an :obj:`~collections.abc.Iterable` object)
     of the Cartesian product (such that the union of the disjoint subsets is
-    equal to the Cartesian product).
+    equal to the overall Cartesian product).
 
     >>> ss = products([1, 2], {'a', 'b'}, (False, True), number=3)
     >>> for s in sorted([sorted(list(s)) for s in ss]):
@@ -39,7 +44,7 @@ def products(*args, number: Optional[int] = None):
 
     By default (if the ``number`` argument is not assigned a value), the number
     of disjoint subsets is one. Note that the union of the disjoint subsets is
-    equivalent to the output of the ``itertools.product`` function.
+    equivalent to the output of the :obj:`itertools.product` function.
 
     >>> p = itertools.product([1, 2], {'a', 'b'}, (True, False))
     >>> ss = products([1, 2], {'a', 'b'}, (True, False))
@@ -73,7 +78,7 @@ def products(*args, number: Optional[int] = None):
     >>> ls == list(range(1, 100))
     True
 
-    Any attempt to apply this function to arguments of an unsupported type
+    Any attempt to apply this function to arguments that have unsupported types
     raises an exception.
 
     >>> products([1, 2], number='abc')
@@ -106,8 +111,9 @@ def products(*args, number: Optional[int] = None):
 
     # If no target number of disjoint subsets has been supplied, simply
     # return a single product. Note that this function is not equivalent to
-    # `itertools.product` because this function always returns a list
-    # of iterables (the subsets).
+    # :obj:`itertools.product` because this function always returns a sequence
+    # of iterables (the subsets). In this case, there is only one element
+    # in that sequence.
     if number is None or number == 1:
         return [itertools.product(*args)]
 
