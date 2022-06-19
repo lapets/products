@@ -24,11 +24,11 @@ Simple function for building ensembles of iterables that are disjoint partitions
 
 Purpose
 -------
-Once the ``iterables.product`` `function <https://docs.python.org/3/library/itertools.html#itertools.product>`_ has been used to build an iterable for a Cartesian product, it is already too late to partition that iterable into multiple iterables where each one represents a subset of the product set. Iterables representing disjoint subsets can, for example, make it easier to employ parallelization when processing the product set. The ``products`` function in this package constructs a list of independent iterators for a specified number of disjoint subsets of a product set (in the manner of the `parts <https://pypi.org/project/parts/>`_ library), exploiting as much information as possible about the constituent factor sets of the overall product set in order to do so.
+Once the ``iterables.product`` `function <https://docs.python.org/3/library/itertools.html#itertools.product>`__ has been used to build an iterable for a Cartesian product, it is already too late to partition that iterable into multiple iterables where each one represents a subset of the product set. Iterables representing disjoint subsets can, for example, make it easier to employ parallelization when processing the product set. The ``products`` function in this package constructs a list of independent iterators for a specified number of disjoint subsets of a product set (in the manner of the `parts <https://pypi.org/project/parts>`__ library), exploiting as much information as possible about the constituent factor sets of the overall product set in order to do so.
 
-Package Installation and Usage
-------------------------------
-The package is available on `PyPI <https://pypi.org/project/products/>`_::
+Installation and Usage
+----------------------
+The package is available on `PyPI <https://pypi.org/project/products>`__::
 
     python -m pip install products
 
@@ -37,7 +37,7 @@ The library can be imported in the usual ways::
     import products
     from products import products
 
-This library provides an alternative to the built-in Cartesian product function found in `itertools <https://docs.python.org/3/library/itertools.html>`_, making it possible to iterate over multiple disjoint subsets of a Cartesian product (even in parallel). Consider the Cartesian product below::
+This library provides an alternative to the built-in Cartesian product function found in `itertools <https://docs.python.org/3/library/itertools.html>`__, making it possible to iterate over multiple disjoint subsets of a Cartesian product (even in parallel). Consider the Cartesian product below::
 
     >>> from itertools import product
     >>> p = product([1, 2], {'a', 'b'}, (False, True))
@@ -65,49 +65,57 @@ This library makes it possible to create a number of iterators such that each it
 
 The iterable corresponding to each subset is independent from the others, making it possible to employ techniques such as multiprocessing when operating on the elements of the overall Cartesian product.
 
+Development
+-----------
+All installation and development dependencies are managed using `setuptools <https://pypi.org/project/setuptools>`__ and are fully specified in ``setup.py``. The ``extras_require`` parameter is used to `specify optional requirements <https://setuptools.pypa.io/en/latest/userguide/dependency_management.html#optional-dependencies>`__ for various development tasks. This makes it possible to specify additional options (such as ``docs``, ``lint``, and so on) when performing installation using `pip <https://pypi.org/project/pip>`__::
+
+    python -m pip install .[docs,lint]
+
 Documentation
--------------
+^^^^^^^^^^^^^
 .. include:: toc.rst
 
-The documentation can be generated automatically from the source files using `Sphinx <https://www.sphinx-doc.org/>`_::
+The documentation can be generated automatically from the source files using `Sphinx <https://www.sphinx-doc.org>`__::
 
+    python -m pip install .[docs]
     cd docs
-    python -m pip install -r requirements.txt
     sphinx-apidoc -f -E --templatedir=_templates -o _source .. ../setup.py && make html
 
 Testing and Conventions
------------------------
-All unit tests are executed and their coverage is measured when using `pytest <https://docs.pytest.org/>`_ (see ``setup.cfg`` for configuration details)::
+^^^^^^^^^^^^^^^^^^^^^^^
+All unit tests are executed and their coverage is measured when using `pytest <https://docs.pytest.org>`__ (see ``setup.cfg`` for configuration details)::
 
-    python -m pip install pytest pytest-cov
+    python -m pip install .[test]
     python -m pytest
 
-Alternatively, all unit tests are included in the module itself and can be executed using `doctest <https://docs.python.org/3/library/doctest.html>`_::
+Alternatively, all unit tests are included in the module itself and can be executed using `doctest <https://docs.python.org/3/library/doctest.html>`__::
 
     python products/products.py -v
 
-Style conventions are enforced using `Pylint <https://www.pylint.org/>`_::
+Style conventions are enforced using `Pylint <https://www.pylint.org>`__::
 
-    python -m pip install pylint
+    python -m pip install .[lint]
     python -m pylint products
 
 Contributions
--------------
-In order to contribute to the source code, open an issue or submit a pull request on the `GitHub page <https://github.com/lapets/products>`_ for this library.
+^^^^^^^^^^^^^
+In order to contribute to the source code, open an issue or submit a pull request on the `GitHub page <https://github.com/lapets/products>`__ for this library.
 
 Versioning
-----------
-The version number format for this library and the changes to the library associated with version number increments conform with `Semantic Versioning 2.0.0 <https://semver.org/#semantic-versioning-200>`_.
+^^^^^^^^^^
+The version number format for this library and the changes to the library associated with version number increments conform with `Semantic Versioning 2.0.0 <https://semver.org/#semantic-versioning-200>`__.
 
 Publishing
-----------
-This library can be published as a `package on PyPI <https://pypi.org/project/products/>`_ by a package maintainer. Install the `wheel <https://pypi.org/project/wheel/>`_ package, remove any old build/distribution files, and package the source into a distribution archive::
+^^^^^^^^^^
+This library can be published as a `package on PyPI <https://pypi.org/project/products>`__ by a package maintainer. First, install the dependencies required for packaging and publishing::
 
-    python -m pip install wheel
+    python -m pip install .[publish]
+
+Remove any old build/distribution files. Then, package the source into a distribution archive using the `wheel <https://pypi.org/project/wheel>`__ package::
+
     rm -rf dist *.egg-info
     python setup.py sdist bdist_wheel
 
-Next, install the `twine <https://pypi.org/project/twine/>`_ package and upload the package distribution archive to PyPI::
+Finally, upload the package distribution archive to `PyPI <https://pypi.org>`__ using the `twine <https://pypi.org/project/twine>`__ package::
 
-    python -m pip install twine
     python -m twine upload dist/*
