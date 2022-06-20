@@ -3,9 +3,9 @@ Simple function for building ensembles of iterators that
 represent disjoint partitions of an overall Cartesian product.
 """
 from __future__ import annotations
-from typing import Optional
+from typing import Optional, Collection, Sequence, Iterable
 import doctest
-from collections.abc import Iterable, Collection, Sequence
+import collections.abc as collections_abc # Avoid collision with local variable.
 import itertools
 from parts import parts
 
@@ -103,7 +103,7 @@ def products(
     """
     factors = list(collections) # Ensure factor sets are reusable and their quantity is known.
 
-    if not all(isinstance(factor, Collection) for factor in factors):
+    if not all(isinstance(factor, collections_abc.Collection) for factor in factors):
         raise TypeError('arguments must be collections')
 
     if number is not None:
