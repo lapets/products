@@ -3,24 +3,27 @@ Simple function for building ensembles of iterators that
 represent disjoint partitions of an overall Cartesian product.
 """
 from __future__ import annotations
-from typing import Optional, Collection, Sequence, Iterable
+from typing import Tuple, Optional, Collection, Sequence, Iterable
 import doctest
 import collections.abc as collections_abc # Avoid collision with local variable.
 import itertools
 from parts import parts
 
 def products(
-        *collections: Iterable[Collection],
+        *collections: Tuple[Collection],
         number: Optional[int] = None
     ) -> Sequence[Iterable]:
     """
-    Accept an :obj:`~collections.abc.Iterable` of :obj:`~collections.abc.Collection`
-    instances and return a :obj:`~collections.abc.Sequence` of the specified number
-    of disjoint subsets of the
-    `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`_ of the
-    supplied :obj:`~collections.abc.Collection` instances. Each subset is
+    Accept zero or more :obj:`~collections.abc.Collection` instances as arguments
+    and return a :obj:`~collections.abc.Sequence` of the specified number of disjoint
+    subsets of the `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`_
+    of the supplied :obj:`~collections.abc.Collection` instances. Each subset is
     represented as an :obj:`~collections.abc.Iterable` and the union of the disjoint
     subsets is equal to the overall Cartesian product.
+
+    :param collections: Zero or more arguments that represent the
+        factor sets of the Cartesian product.
+    :param number: Number of disjoint subsets to return.
 
     >>> ss = products(range(1, 3), {'a', 'b'}, (False, True), number=3)
     >>> for s in sorted([sorted(list(s)) for s in ss]):
