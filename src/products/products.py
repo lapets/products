@@ -84,6 +84,13 @@ def products(
     >>> ls == list(range(1, 100))
     True
 
+    If the requested number of disjoint subsets exceeds the number of elements in
+    Cartesian product, the number of disjoint subsets will be equivalent to the
+    number of elements in the Cartesian product.
+
+    >>> len(products([1, 2], ['a', 'b'], number=10))
+    4
+
     Any attempt to apply this function to arguments that have unsupported types
     raises an exception.
 
