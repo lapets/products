@@ -31,7 +31,7 @@ Purpose
 Once the |itertools_product|_ has been used to build an iterable representing a `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`__, it is already too late to partition that iterable into multiple iterables where each one represents a subset of the product set. Iterables representing disjoint subsets can, for example, make it easier to employ parallelization when processing the product set.
 
 .. |products| replace:: ``products``
-.. _products: https://products.readthedocs.io/en/latest/_source/products.html#products.products.products
+.. _products: https://products.readthedocs.io/en/1.1.0/_source/products.html#products.products.products
 
 The |products|_ function in this package constructs a list of independent `iterators <https://docs.python.org/3/glossary.html#term-iterator>`__ for a specified number of disjoint subsets of a product set (in the manner of the `parts <https://pypi.org/project/parts>`__ library), exploiting as much information as is available about the constituent factor sets of the overall product set in order to do so.
 
@@ -45,6 +45,9 @@ The library can be imported in the usual ways::
 
     import products
     from products import products
+
+Examples
+^^^^^^^^
 
 .. |product| replace:: ``product``
 .. _product: https://docs.python.org/3/library/itertools.html#itertools.product
@@ -79,23 +82,21 @@ The `iterable <https://docs.python.org/3/glossary.html#term-iterable>`__ corresp
 
 Development
 -----------
-All installation and development dependencies are managed using `setuptools <https://pypi.org/project/setuptools>`__ and are fully specified in ``setup.py``. The ``extras_require`` parameter is used to `specify optional requirements <https://setuptools.pypa.io/en/latest/userguide/dependency_management.html#optional-dependencies>`__ for various development tasks. This makes it possible to specify additional options (such as ``docs``, ``lint``, and so on) when performing installation using `pip <https://pypi.org/project/pip>`__::
+All installation and development dependencies are fully specified in ``pyproject.toml``. The ``project.optional-dependencies`` object is used to `specify optional requirements <https://peps.python.org/pep-0621>`__ for various development tasks. This makes it possible to specify additional options (such as ``docs``, ``lint``, and so on) when performing installation using `pip <https://pypi.org/project/pip>`__::
 
     python -m pip install .[docs,lint]
 
 Documentation
 ^^^^^^^^^^^^^
-.. include:: toc.rst
-
 The documentation can be generated automatically from the source files using `Sphinx <https://www.sphinx-doc.org>`__::
 
     python -m pip install .[docs]
     cd docs
-    sphinx-apidoc -f -E --templatedir=_templates -o _source .. ../setup.py && make html
+    sphinx-apidoc -f -E --templatedir=_templates -o _source .. && make html
 
 Testing and Conventions
 ^^^^^^^^^^^^^^^^^^^^^^^
-All unit tests are executed and their coverage is measured when using `pytest <https://docs.pytest.org>`__ (see ``setup.cfg`` for configuration details)::
+All unit tests are executed and their coverage is measured when using `pytest <https://docs.pytest.org>`__ (see the ``pyproject.toml`` file for configuration details)::
 
     python -m pip install .[test]
     python -m pytest
@@ -104,7 +105,7 @@ Alternatively, all unit tests are included in the module itself and can be execu
 
     python products/products.py -v
 
-Style conventions are enforced using `Pylint <https://www.pylint.org>`__::
+Style conventions are enforced using `Pylint <https://pylint.pycqa.org>`__::
 
     python -m pip install .[lint]
     python -m pylint products
@@ -123,10 +124,15 @@ This library can be published as a `package on PyPI <https://pypi.org/project/pr
 
     python -m pip install .[publish]
 
+Ensure that the correct version number appears in the ``pyproject.toml`` file and in any links to this package's Read the Docs documentation that exist in this README document. Also ensure that the Read the Docs project for this library has an `automation rule <https://docs.readthedocs.io/en/stable/automation-rules.html>`__ that activates and sets as the default all tagged versions. Create and push a tag for this version (replacing ``?.?.?`` with the version number)::
+
+    git tag ?.?.?
+    git push origin ?.?.?
+
 Remove any old build/distribution files. Then, package the source into a distribution archive using the `wheel <https://pypi.org/project/wheel>`__ package::
 
-    rm -rf dist *.egg-info
-    python setup.py sdist bdist_wheel
+    rm -rf build dist *.egg-info
+    python -m build --sdist --wheel .
 
 Finally, upload the package distribution archive to `PyPI <https://pypi.org>`__ using the `twine <https://pypi.org/project/twine>`__ package::
 
