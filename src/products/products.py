@@ -5,18 +5,18 @@ represent disjoint partitions of an overall Cartesian product.
 from __future__ import annotations
 from typing import Tuple, Optional, Collection, Sequence, Iterable
 import doctest
-import collections.abc as collections_abc # Avoid collision with local variable.
+import collections.abc as collections_abc # Avoid collision with function argument.
 import itertools
 from parts import parts
 
 def products(
-        *collections: Tuple[Collection],
+        *collections: Tuple[Collection, ...],
         number: Optional[int] = None
     ) -> Sequence[Iterable]:
     """
     Accept zero or more :obj:`~collections.abc.Collection` instances as arguments
     and return a :obj:`~collections.abc.Sequence` of the specified number of disjoint
-    subsets of the `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`_
+    subsets of the `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`__
     of the supplied :obj:`~collections.abc.Collection` instances. Each subset is
     represented as an :obj:`~collections.abc.Iterable` and the union of the disjoint
     subsets is equal to the overall Cartesian product.
@@ -153,5 +153,5 @@ def products(
 
     return [generator(prefix) for prefix in prefixes]
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     doctest.testmod() # pragma: no cover
