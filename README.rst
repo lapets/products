@@ -31,7 +31,7 @@ Purpose
 Once the |itertools_product|_ has been used to build an iterable representing a `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`__, it is already too late to partition that iterable into multiple iterables where each one represents a subset of the product set. Iterables representing disjoint subsets can, for example, make it easier to employ parallelization when processing the product set.
 
 .. |products| replace:: ``products``
-.. _products: https://products.readthedocs.io/en/1.1.2/_source/products.html#products.products.products
+.. _products: https://products.readthedocs.io/en/1.2.0/_source/products.html#products.products.products
 
 The |products|_ function in this package constructs a list of independent `iterators <https://docs.python.org/3/glossary.html#term-iterator>`__ for a specified number of disjoint subsets of a product set (in the manner of the `parts <https://pypi.org/project/parts>`__ library), exploiting as much information as is available about the constituent factor sets of the overall product set in order to do so.
 
