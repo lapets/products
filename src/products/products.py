@@ -5,7 +5,7 @@ represent disjoint partitions of an overall Cartesian product.
 from __future__ import annotations
 from typing import Tuple, Optional, Collection, Sequence, Iterable
 import doctest
-import collections.abc as collections_abc # Avoid collision with function argument.
+import collections.abc as collections_abc # Avoid function argument collision.
 import itertools
 from parts import parts
 
@@ -14,12 +14,13 @@ def products(
         number: Optional[int] = None
     ) -> Sequence[Iterable]:
     """
-    Accept zero or more :obj:`~collections.abc.Collection` instances as arguments
-    and return a :obj:`~collections.abc.Sequence` of the specified number of disjoint
-    subsets of the `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`__
-    of the supplied :obj:`~collections.abc.Collection` instances. Each subset is
-    represented as an :obj:`~collections.abc.Iterable` and the union of the disjoint
-    subsets is equal to the overall Cartesian product.
+    Accept zero or more :obj:`~collections.abc.Collection` instances as
+    arguments and return a :obj:`~collections.abc.Sequence` of the specified
+    number of disjoint subsets of the
+    `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`__
+    of the supplied :obj:`~collections.abc.Collection` instances. Each subset
+    is represented as an :obj:`~collections.abc.Iterable` and the union of the
+    disjoint subsets is equal to the overall Cartesian product.
 
     :param collections: Zero or more arguments that represent the
         factor sets of the Cartesian product.
@@ -84,9 +85,9 @@ def products(
     >>> ls == list(range(1, 100))
     True
 
-    If the requested number of disjoint subsets exceeds the number of elements in
-    Cartesian product, the number of disjoint subsets will be equivalent to the
-    number of elements in the Cartesian product.
+    If the requested number of disjoint subsets exceeds the number of elements
+    in Cartesian product, the number of disjoint subsets will be equivalent to
+    the number of elements in the Cartesian product.
 
     >>> len(products([1, 2], ['a', 'b'], number=10))
     4
@@ -111,9 +112,10 @@ def products(
       ...
     ValueError: number of disjoint subsets must be a positive integer
     """
-    factors = list(collections) # Ensure factor sets are reusable and their quantity is known.
+    # Ensure factor sets are reusable and their quantity is known.
+    factors = list(collections)
 
-    if not all(isinstance(factor, collections_abc.Collection) for factor in factors):
+    if not all(isinstance(f, collections_abc.Collection) for f in factors):
         raise TypeError('arguments must be collections')
 
     if number is not None:
@@ -121,7 +123,9 @@ def products(
             raise TypeError('number of disjoint subsets must be an integer')
 
         if number < 1:
-            raise ValueError('number of disjoint subsets must be a positive integer')
+            raise ValueError(
+                'number of disjoint subsets must be a positive integer'
+            )
 
     # If no target number of disjoint subsets has been supplied, simply
     # return a single product. Note that this function is not equivalent to
