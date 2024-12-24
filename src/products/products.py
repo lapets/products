@@ -3,14 +3,14 @@ Simple function for building ensembles of iterators that
 represent disjoint partitions of an overall Cartesian product.
 """
 from __future__ import annotations
-from typing import Tuple, Optional, Collection, Sequence, Iterable
+from typing import Optional, Collection, Sequence, Iterable
 import doctest
 import collections.abc as collections_abc # Avoid function argument collision.
 import itertools
 from parts import parts
 
 def products(
-        *collections: Tuple[Collection, ...],
+        *collections: Collection,
         number: Optional[int] = None
     ) -> Sequence[Iterable]:
     """
