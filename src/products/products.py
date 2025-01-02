@@ -1,6 +1,6 @@
 """
-Simple function for building ensembles of iterators that
-represent disjoint partitions of an overall Cartesian product.
+Simple function for building ensembles of iterables that are disjoint
+partitions of an overall Cartesian product.
 """
 from __future__ import annotations
 from typing import Optional, Collection, Sequence, Iterable
@@ -18,13 +18,14 @@ def products(
     arguments and return a :obj:`~collections.abc.Sequence` of the specified
     number of disjoint subsets of the
     `Cartesian product <https://en.wikipedia.org/wiki/Cartesian_product>`__
-    of the supplied :obj:`~collections.abc.Collection` instances. Each subset
-    is represented as an :obj:`~collections.abc.Iterable` and the union of the
-    disjoint subsets is equal to the overall Cartesian product.
+    of the supplied :obj:`~collections.abc.Collection` instances.
 
     :param collections: Zero or more arguments that represent the
         factor sets of the Cartesian product.
     :param number: Number of disjoint subsets to return.
+
+    Each subset is represented as an :obj:`~collections.abc.Iterable` and the
+    union of the disjoint subsets is equal to the overall Cartesian product.
 
     >>> ss = products(range(1, 3), {'a', 'b'}, (False, True), number=3)
     >>> for s in sorted([sorted(list(s)) for s in ss]):
